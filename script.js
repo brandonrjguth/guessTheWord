@@ -43,6 +43,8 @@ function startGame() {
     roundTransitionArea.classList.add('hidden');
     newGameBtn.classList.add('hidden');
     gameArea.classList.remove('hidden');
+    colorOptionsContainer.classList.add('hidden'); // Hide color options grid
+    colorPickerBtn.classList.add('hidden'); // Hide color picker button
     startRound();
 }
 
@@ -67,7 +69,23 @@ function drawCard() {
     }
     const randomIndex = Math.floor(Math.random() * availableCards.length);
     const currentCard = availableCards.splice(randomIndex, 1)[0];
-    displayCard(currentCard);
+    // Ensure the card is in the initial hidden state before starting the transition
+    cardElement.style.opacity = 0;
+    cardElement.style.transform = 'scale(0.9)';
+
+
+    // Wait for a brief moment to ensure the initial state is applied, then change content and animate in
+    setTimeout(() => {
+        displayCard(currentCard);
+        // Add visible class to animate in the new card
+        cardElement.classList.add('card-visible');
+    }, 50); // Short delay to allow initial state to apply before content change
+
+    // After the content is displayed, trigger the animation to visible state
+    setTimeout(() => {
+        cardElement.style.opacity = 1;
+        cardElement.style.transform = 'scale(1)';
+    }, 100); // Delay to allow content to update before animating
 }
 
 function displayCard(card) {
@@ -156,6 +174,92 @@ function endGame() {
     gameOverArea.classList.remove('hidden');
     finalScoreElement.innerHTML = `Final Score:<br>Player 1: ${player1Score}<br>Player 2: ${player2Score}`;
 }
+
+// Color Picker Functionality
+const colorPickerBtn = document.getElementById('color-picker-btn');
+const colorOptionsContainer = document.getElementById('color-options');
+const root = document.documentElement;
+
+const colorPalettes = [
+    { // Purple Palette
+        primary: '#4527A0',
+        secondary: '#7E57C2',
+        warning: '#B39DDB',
+        danger: '#E53935'
+    },
+    { // Blue Palette
+        primary: '#1565C0',
+        secondary: '#42A5F5',
+        warning: '#90CAF9',
+        danger: '#EF5350'
+    },
+    { // Green Palette
+        primary: '#388E3C',
+        secondary: '#66BB6A',
+        warning: '#A5D6A7',
+        danger: '#EF5350'
+    },
+    { // Red Palette
+        primary: '#C62828',
+        secondary: '#E57373',
+        warning: '#EF9A9A',
+        danger: '#B71C1C'
+    }
+];
+
+function populateColorOptions() {
+    colorOptionsContainer.innerHTML = ''; // Clear existing options
+    colorPalettes.forEach((palette, index) => {
+        const colorDot = document.createElement('div');
+        colorDot.classList.add('color-dot');
+        colorDot.style.backgroundColor = palette.primary; // Use primary color for the dot
+        colorDot.dataset.paletteIndex = index; // Store palette index
+        colorDot.addEventListener('click', handleColorSelect);
+        colorOptionsContainer.appendChild(colorDot);
+    });
+}
+
+function handleColorSelect(event) {
+    const selectedIndex = event.target.dataset.paletteIndex;
+    const selectedPalette = colorPalettes[selectedIndex];
+
+    // Update CSS variables
+    root.style.setProperty('--primary-color', selectedPalette.primary);
+    root.style.setProperty('--secondary-color', selectedPalette.secondary);
+    root.style.setProperty('--warning-color', selectedPalette.warning);
+    root.style.setProperty('--danger-color', selectedPalette.danger);
+
+    // Update color picker button color
+    colorPickerBtn.style.backgroundColor = selectedPalette.primary;
+
+    // Apply gradient text effect to relevant elements (excluding h1)
+    applyGradientText('#main-word', selectedPalette.primary, selectedPalette.secondary);
+    applyGradientText('#player1-score', selectedPalette.primary, selectedPalette.secondary);
+    applyGradientText('#player2-score', selectedPalette.primary, selectedPalette.secondary);
+
+
+    // Hide color options
+    colorOptionsContainer.classList.add('hidden');
+}
+
+function applyGradientText(selector, color1, color2) {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(element => {
+        element.style.backgroundImage = `linear-gradient(45deg, ${color1}, ${color2})`;
+        element.style.webkitBackgroundClip = 'text';
+        element.style.backgroundClip = 'text';
+        element.style.color = 'transparent';
+    });
+}
+
+
+// Toggle color options visibility
+colorPickerBtn.addEventListener('click', () => {
+    colorOptionsContainer.classList.toggle('hidden');
+});
+
+// Populate color options on load
+populateColorOptions();
 
 
 /*Card Cleanup
