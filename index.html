@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Word</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Guess The Word</h1>
+        <button id="new-game-btn">New Game</button>
+        <div id="game-area" class="hidden">
+            <div id="card">
+                <h2 id="main-word"></h2>
+                <ul id="forbidden-words"></ul>
+            </div>
+            <div id="timer">Time: <span id="time-left">60</span>s</div>
+            <div class="buttons">
+                <button id="pass-btn">Pass</button>
+                <button id="got-it-btn">Got it!</button>
+            </div>
+            <p id="pass-warning" class="hidden"></p>
+            <div id="score">
+                Player 1: <span id="player1-score">0</span> | Player 2: <span id="player2-score">0</span>
+            </div>
+        </div>
+        <div id="round-transition-area" class="hidden">
+            <p id="round-message"></p>
+            <button id="start-next-round-btn">Start Next Round</button>
+        </div>
+        <div id="game-over-area" class="hidden">
+            <h2>Game Over!</h2>
+            <div id="final-score"></div>
+            <button id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <script src="cards.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
