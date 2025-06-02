@@ -185,25 +185,29 @@ const colorPalettes = [
         primary: '#4527A0',
         secondary: '#7E57C2',
         warning: '#B39DDB',
-        danger: '#E53935'
+        danger: '#E53935',
+        background: '#EDE7F6'
     },
     { // Blue Palette
         primary: '#1565C0',
         secondary: '#42A5F5',
         warning: '#90CAF9',
-        danger: '#EF5350'
+        danger: '#EF5350',
+        background: '#E3F2FD'
     },
     { // Green Palette
         primary: '#388E3C',
         secondary: '#66BB6A',
         warning: '#A5D6A7',
-        danger: '#EF5350'
+        danger: '#EF5350',
+        background: '#E8F5E9'
     },
     { // Red Palette
         primary: '#C62828',
         secondary: '#E57373',
         warning: '#EF9A9A',
-        danger: '#B71C1C'
+        danger: '#B71C1C',
+        background: '#FFEBEE'
     }
 ];
 
@@ -228,6 +232,7 @@ function handleColorSelect(event) {
     root.style.setProperty('--secondary-color', selectedPalette.secondary);
     root.style.setProperty('--warning-color', selectedPalette.warning);
     root.style.setProperty('--danger-color', selectedPalette.danger);
+    root.style.setProperty('--background-color', selectedPalette.background);
 
     // Update color picker button color
     colorPickerBtn.style.backgroundColor = selectedPalette.primary;
