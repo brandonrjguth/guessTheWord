@@ -143,16 +143,16 @@ function endRound() {
     gameArea.classList.add('hidden');
     roundTransitionArea.classList.remove('hidden');
 
-    if (currentRound < 3 || (currentRound === 3 && currentPlayer === 1)) {
+    if (currentRound < 2 || (currentRound === 2 && currentPlayer === 1)) {
         // Move to next player or next round
         if (currentPlayer === 1) {
             currentPlayer = 2;
-            roundMessageElement.textContent = "Player 1's turn is over. Player 2's turn is next!";
+            roundMessageElement.textContent = `Player 1 scored ${player1Score} points this round! Player 2's turn is next!`;
         } else {
             currentPlayer = 1;
             currentRound++;
-            if (currentRound <= 3) {
-                roundMessageElement.textContent = `Player 2's turn is over. Starting Round ${currentRound} for Player 1!`;
+            if (currentRound <= 2) {
+                roundMessageElement.textContent = `Player 2 scored ${player2Score} points this round! Starting Round ${currentRound} for Player 1!`;
             } else {
                 endGame();
                 return; // Exit to prevent showing transition area before game over
@@ -172,7 +172,7 @@ function endGame() {
     gameArea.classList.add('hidden');
     roundTransitionArea.classList.add('hidden');
     gameOverArea.classList.remove('hidden');
-    finalScoreElement.innerHTML = `Final Score:<br>Player 1: ${player1Score}<br>Player 2: ${player2Score}`;
+    finalScoreElement.innerHTML = `Game Over! Final Scores:<br><br>Player 1: ${player1Score} points<br>Player 2: ${player2Score} points`;
 }
 
 // Color Picker Functionality
