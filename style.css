@@ -11,12 +11,16 @@
     --card-background-color: #ffffff; /* White */
 }
 
+html{
+    height:100%
+}
 body {
     font-family: 'Roboto', sans-serif; /* Use Roboto for body text */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 1rem);
+    min-height: 100%;
+    min-height: -webkit-fill-available;;
     background-color: var(--background-color); /* Very Light Purple background */
     margin: 0;
     color: var(--text-color);
