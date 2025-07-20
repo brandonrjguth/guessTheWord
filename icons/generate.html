@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            margin: 10px;
+        }
+        body {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <script>
+    const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+    
+    sizes.forEach(size => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        document.body.appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        
+        // Background
+        ctx.fillStyle = '#4527A0';
+        ctx.beginPath();
+        ctx.roundRect(0, 0, size, size, size * 0.125);
+        ctx.fill();
+        
+        // Text
+        ctx.fillStyle = 'white';
+        ctx.font = `bold ${size * 0.6}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('W', size/2, size/2);
+        
+        // Label
+        const label = document.createElement('div');
+        label.textContent = `${size}x${size}`;
+        document.body.appendChild(label);
+    });
+    </script>
+</body>
+</html>
