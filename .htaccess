@@ -1,0 +1,15 @@
+# Set correct MIME type for manifest.json
+AddType application/manifest+json .webmanifest
+AddType application/manifest+json .json
+
+# Enable CORS
+Header set Access-Control-Allow-Origin "*"
+
+# Cache Control for PWA assets
+<FilesMatch ".(html|css|js|json|webmanifest)$">
+    Header set Cache-Control "public, max-age=0"
+</FilesMatch>
+
+<FilesMatch ".(jpg|jpeg|png|gif|ico|svg)$">
+    Header set Cache-Control "public, max-age=31536000"
+</FilesMatch>

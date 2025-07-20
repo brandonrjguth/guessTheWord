@@ -17,6 +17,13 @@
     <script>
     const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
     
+    function downloadIcon(canvas, size) {
+        const link = document.createElement('a');
+        link.download = `icon-${size}x${size}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
     sizes.forEach(size => {
         const canvas = document.createElement('canvas');
         canvas.width = size;
@@ -38,11 +45,27 @@
         ctx.textBaseline = 'middle';
         ctx.fillText('W', size/2, size/2);
         
-        // Label
-        const label = document.createElement('div');
-        label.textContent = `${size}x${size}`;
-        document.body.appendChild(label);
+        // Download button
+        const button = document.createElement('button');
+        button.textContent = `Download ${size}x${size}`;
+        button.onclick = () => downloadIcon(canvas, size);
+        document.body.appendChild(button);
     });
+
+    // Add download all button
+    const downloadAllBtn = document.createElement('button');
+    downloadAllBtn.textContent = 'Download All Icons';
+    downloadAllBtn.style.display = 'block';
+    downloadAllBtn.style.margin = '20px';
+    downloadAllBtn.onclick = () => {
+        const canvases = document.querySelectorAll('canvas');
+        canvases.forEach((canvas, index) => {
+            setTimeout(() => {
+                downloadIcon(canvas, sizes[index]);
+            }, index * 500); // Delay each download to prevent browser blocking
+        });
+    };
+    document.body.appendChild(downloadAllBtn);
     </script>
 </body>
 </html>
