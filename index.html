@@ -15,18 +15,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Word Guesser</h1>
-        <button id="new-game-btn">New Game</button>
-        <button id="color-picker-btn"></button>
-        <div id="color-options" class="hidden">
-            <!-- Color dots will go here -->
+        <h1>Word Guesser<span class="subtitle">Party Edition</span></h1>
+        <div class="button-container">
+            <button id="new-game-btn">New Game</button>
         </div>
         <div id="game-area" class="hidden">
             <div id="card">
                 <h2 id="main-word"></h2>
                 <ul id="forbidden-words"></ul>
             </div>
-            <div id="timer">Time: <span id="time-left">60</span>s</div>
+            <div id="timer">
+                <div class="timer-label">Time Left</div>
+                <span id="time-left">60</span>
+            </div>
             <div class="buttons">
                 <button id="pass-btn">Pass</button>
                 <button id="got-it-btn">Got it!</button>
@@ -34,10 +35,12 @@
             <p id="pass-warning" class="hidden"></p>
             <div id="score">
                 <div class="playerOne">
-                    <span>Player 1</span><span id="player1-score">0</span>
+                    <span class="player-label">Player 1</span>
+                    <span id="player1-score" class="score-value">0</span>
                 </div>
                 <div class="playerTwo">
-                    <span>Player 2</span><span id="player2-score">0</span>
+                    <span class="player-label">Player 2</span>
+                    <span id="player2-score" class="score-value">0</span>
                 </div>
             </div>
         </div>

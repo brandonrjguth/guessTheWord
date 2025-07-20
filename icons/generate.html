@@ -3,69 +3,116 @@
 <head>
     <title>Icon Generator</title>
     <style>
-        canvas {
-            border: 1px solid black;
-            margin: 10px;
-        }
         body {
+            background: #1A1A2E;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            color: white;
+        }
+        .preview {
+            margin: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        canvas {
+            margin: 10px;
+            border-radius: 12px;
+        }
+        button {
+            margin: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #FF4E50, #FC913A);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
+    <div id="preview" class="preview">
+        <h2>Icon Preview</h2>
+    </div>
+    <button id="downloadAll">Download All Icons</button>
+
     <script>
     const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
     
-    function downloadIcon(canvas, size) {
-        const link = document.createElement('a');
-        link.download = `icon-${size}x${size}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    }
-
-    sizes.forEach(size => {
+    function createIcon(size) {
         const canvas = document.createElement('canvas');
         canvas.width = size;
         canvas.height = size;
-        document.body.appendChild(canvas);
-        
         const ctx = canvas.getContext('2d');
         
-        // Background
-        ctx.fillStyle = '#4527A0';
-        ctx.beginPath();
-        ctx.roundRect(0, 0, size, size, size * 0.125);
-        ctx.fill();
+        // Background gradient
+        const gradient = ctx.createLinearGradient(0, 0, size, size);
+        gradient.addColorStop(0, '#FF4E50');
+        gradient.addColorStop(1, '#FC913A');
         
-        // Text
+        // Draw rounded rectangle background
+        ctx.fillStyle = gradient;
+        const radius = size * 0.2;
+        ctx.beginPath();
+        ctx.moveTo(size * 0.2, 0);
+        ctx.lineTo(size * 0.8, 0);
+        ctx.quadraticCurveTo(size, 0, size, size * 0.2);
+        ctx.lineTo(size, size * 0.8);
+        ctx.quadraticCurveTo(size, size, size * 0.8, size);
+        ctx.lineTo(size * 0.2, size);
+        ctx.quadraticCurveTo(0, size, 0, size * 0.8);
+        ctx.lineTo(0, size * 0.2);
+        ctx.quadraticCurveTo(0, 0, size * 0.2, 0);
+        ctx.fill();
+
+        // Add glow effect
+        ctx.shadowColor = '#FF4E50';
+        ctx.shadowBlur = size * 0.1;
+        
+        // Draw "W" letter
         ctx.fillStyle = 'white';
-        ctx.font = `bold ${size * 0.6}px Arial`;
+        ctx.font = `bold ${size * 0.5}px Arial`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('W', size/2, size/2);
         
-        // Download button
-        const button = document.createElement('button');
-        button.textContent = `Download ${size}x${size}`;
-        button.onclick = () => downloadIcon(canvas, size);
-        document.body.appendChild(button);
+        // Add slight 3D effect
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        ctx.shadowOffsetX = size * 0.02;
+        ctx.shadowOffsetY = size * 0.02;
+        ctx.shadowBlur = size * 0.05;
+        
+        ctx.fillText('W', size/2, size/2);
+
+        return canvas;
+    }
+
+    // Create and display previews
+    sizes.forEach(size => {
+        const canvas = createIcon(size);
+        document.getElementById('preview').appendChild(canvas);
     });
 
-    // Add download all button
-    const downloadAllBtn = document.createElement('button');
-    downloadAllBtn.textContent = 'Download All Icons';
-    downloadAllBtn.style.display = 'block';
-    downloadAllBtn.style.margin = '20px';
-    downloadAllBtn.onclick = () => {
-        const canvases = document.querySelectorAll('canvas');
-        canvases.forEach((canvas, index) => {
-            setTimeout(() => {
-                downloadIcon(canvas, sizes[index]);
-            }, index * 500); // Delay each download to prevent browser blocking
+    // Download functionality
+    document.getElementById('downloadAll').addEventListener('click', () => {
+        sizes.forEach((size, index) => {
+            const canvas = createIcon(size);
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            
+            // Add delay to prevent browser blocking
+            setTimeout(() => link.click(), index * 500);
         });
-    };
-    document.body.appendChild(downloadAllBtn);
+    });
     </script>
 </body>
 </html>
