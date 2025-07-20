@@ -30,6 +30,10 @@ body {
     padding: 1rem;
 }
 
+#start-next-round-btn{
+margin:1rem 0rem;
+}
+
 .container {
     width: 100%;
     max-width: 600px;
@@ -361,7 +365,14 @@ button:hover::before {
 /* Media Queries */
 @media (max-width: 480px) {
     h1 { font-size: 2.5rem; }
+    .subtitle { font-size: 1rem; }
     #main-word { font-size: 2rem; }
-    .buttons { flex-direction: column; }
+    #card { padding: 1.5rem; margin: 1rem 0; }
     .container { padding: 1rem; }
+    .buttons { flex-direction: row; gap: 1rem; margin-top: 1rem; }
+    button { padding: 0.8rem 1.5rem; }
+    #score { margin-top: 1rem; padding: 1rem; }
+    .score-value { font-size: 2rem; }
+    #forbidden-words li { padding: 0.8rem 1rem; margin: 0.4rem 0; }
+    .button-container { margin: 1.5rem 0; }
 }
